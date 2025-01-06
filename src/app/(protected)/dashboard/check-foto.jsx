@@ -2,27 +2,30 @@
 
 import { Button } from '@/components/ui/button'
 import { useCheckFotoQuery } from '@/services/voter.service'
+import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 
 export default function CheckFoto() {
-  const { data, refetch } = useCheckFotoQuery()
+  // const { data } = useCheckFotoQuery()
+  const { data: session } = useSession()
   const router = useRouter()
-
-  data && console.log(data)
 
   return (
     <div>
-      CheckFoto
+      {session?.user.foto === 0 && <p>Anda belum mengambil foto</p>}
       <Button
         onClick={() => {
-          refetch()
-          router.refresh()
+          router.push('/take-selfie')
         }}
       >
-        Refresh
+        take selfie page
       </Button>
+
       <div>
-        <pre>{data && JSON.stringify(data, null, 2)}</pre>
+        CheckFoto
+        {/* <div>
+          <pre>{data && JSON.stringify(data, null, 2)}</pre>
+        </div> */}
       </div>
     </div>
   )

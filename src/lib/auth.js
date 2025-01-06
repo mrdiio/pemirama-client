@@ -28,9 +28,7 @@ export const authOptions = {
   },
   callbacks: {
     async jwt({ token, user, session, trigger }) {
-      console.log('session', session)
-
-      if (trigger === 'update' && session.foto) {
+      if (trigger === 'update') {
         token.user.foto = session.foto
       }
 
@@ -48,8 +46,6 @@ export const authOptions = {
         token.user = payload
         token.accessToken = user.accessToken
       }
-
-      console.log('jwt token', token.user)
 
       return token
     },
