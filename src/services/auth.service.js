@@ -11,10 +11,11 @@ const authApi = axios.create({
 export const loginService = async (email, password) => {
   try {
     const res = await authApi.post('/login-mhs', { email, password })
+    console.log(res.data)
 
     return res.data
   } catch (error) {
-    console.log(error.response.data)
+    console.log(error)
 
     throw new Error(error.response.data?.message)
   }
