@@ -6,7 +6,7 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useRef, useState } from 'react'
 import Webcam from 'react-webcam'
-import CheckFoto from '../dashboard/check-foto'
+import CheckFoto from '../home/check-foto'
 import Image from 'next/image'
 
 export default function PemiramaCam() {
@@ -26,8 +26,7 @@ export default function PemiramaCam() {
 
       // queryClient.invalidateQueries('check-foto')
 
-      router.refresh()
-      // router.push('/dashboard')
+      // router.push('/home')
 
       console.log(session)
     },

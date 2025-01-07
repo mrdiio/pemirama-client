@@ -7,14 +7,20 @@ export default async function ProtectedLayout({ children }) {
 
   return (
     <div className="flex min-h-screen bg-[#F6F8FA]">
-      <div className="w-full flex-1 flex flex-col  gap-4">
+      <div className="w-full flex-1 flex flex-col gap-4">
         <Header auth={session.user} />
 
-        <div className="w-full mx-auto p-4 flex-1">
-          <div className="max-w-5xl mx-auto flex flex-1 justify-center flex-col gap-1">
+        <div className="w-full mx-auto px-4 flex-grow">
+          <div className="max-w-5xl mx-auto mt-auto flex flex-grow justify-center h-full">
             {children}
           </div>
         </div>
+
+        <footer className="w-full px-4">
+          <div className="max-w-5xl py-4 mx-auto text-muted-foreground text-sm flex justify-center">
+            Copyrigth &copy; 2024
+          </div>
+        </footer>
       </div>
     </div>
   )

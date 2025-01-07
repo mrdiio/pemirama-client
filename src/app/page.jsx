@@ -18,12 +18,12 @@ export default async function Home() {
   const session = await getServerSession(authOptions)
 
   if (session) {
-    redirect('/dashboard')
+    redirect('/home')
   }
 
   return (
     <div className="sm:grid sm:grid-cols-5 min-h-screen">
-      <div className="w-full sm:col-span-3 hero text-white flex flex-col justify-between sm:rounded-r-[60px]">
+      <div className="w-full sm:col-span-3 hero text-white flex flex-col justify-between sm:rounded-r-[3rem] shadow-md">
         <div className="w-full flex flex-col gap-6 p-6 sm:p-8">
           <div className="flex place-items-center gap-3">
             <div className="w-12 sm:w-fit">

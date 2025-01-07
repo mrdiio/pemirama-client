@@ -17,6 +17,10 @@ export const loginService = async (email, password) => {
   } catch (error) {
     console.log(error)
 
+    if (error.response.status === 500) {
+      throw new Error('Server error')
+    }
+
     throw new Error(error.response.data?.message)
   }
 }
