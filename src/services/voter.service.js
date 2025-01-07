@@ -6,10 +6,15 @@ export const useCheckFotoQuery = () => {
     queryKey: ['check-foto'],
     queryFn: async () => {
       const res = await apiClient.get('/check-foto')
+
+      console.log('check foto', res.data)
+
       return res.data
     },
 
     refetchOnWindowFocus: true,
+    refetchOnMount: true,
+    refetchIntervalInBackground: true,
   })
 }
 

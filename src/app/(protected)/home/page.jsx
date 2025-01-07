@@ -85,9 +85,6 @@ export default async function page() {
           </Card>
         </div>
       </div>
-      <div className="flex-grow bg-gray-400">
-        <CheckFoto />
-      </div>
     </div>
   )
 }
