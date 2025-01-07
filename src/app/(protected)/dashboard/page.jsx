@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/card'
 import Image from 'next/image'
 import { Badge } from '@/components/ui/badge'
-import { CheckCircle2 } from 'lucide-react'
+import { CheckCircle2, GraduationCap, MapPin } from 'lucide-react'
 
 export default async function page() {
   const session = await getServerSession(authOptions)
@@ -22,51 +22,37 @@ export default async function page() {
   // }
 
   return (
-    <div className="flex flex-col gap-4">
-      <Card className="bg-primary">
-        <CardHeader>
-          <CardTitle>PEMIRAMA - Universitas Tanjungpura</CardTitle>
-          <CardDescription>Pemilihan Raya Mahasiswa</CardDescription>
+    <div className="flex flex-col flex-grow gap-4">
+      <Card className="border-none shadow-none pt-4 rounded-none">
+        <CardHeader className="p-1 flex justify-center items-center gap-3">
+          <Image
+            src="https://satu.untan.ac.id/uploads/untan/fotomhs/F1012241002.jpg"
+            width={100}
+            height={100}
+            alt="Logo UNTAN"
+            className="w-32 h-32 object-cover rounded-full"
+          />
+
+          <div className="flex flex-col justify-center items-center">
+            <span className="text-xl font-semibold">{session.user.name}</span>
+            <div className="flex gap-2 items-center text-muted-foreground">
+              <GraduationCap size={16} />
+              {session.user.nim}
+            </div>
+
+            <div className="flex gap-2 items-center text-muted-foreground">
+              <MapPin size={16} />
+              {session.user.fakultas}
+            </div>
+          </div>
         </CardHeader>
       </Card>
 
-      <div className="flex flex-col sm:flex-row gap-4">
-        <Card className="">
-          <CardHeader className="p-1 flex justify-center items-center">
-            <Image
-              src="https://satu.untan.ac.id/uploads/untan/fotomhs/D1041131014.jpg"
-              width={100}
-              height={100}
-              alt="Logo UNTAN"
-              className="w-48 object-cover rounded-sm"
-            />
-          </CardHeader>
-        </Card>
+      <Card className="flex-1 bg-primary/50 rounded-2xl">
+        <CardHeader>test</CardHeader>
+      </Card>
 
-        <Card className="w-full">
-          <CardHeader className="flex flex-col gap-4">
-            <div>
-              <div className="text-xl">
-                Halo, <span className="font-semibold">{session.user.name}</span>
-              </div>
-              <span className="text-muted-foreground">
-                {session.user.fakultas}
-              </span>
-            </div>
-
-            <Badge className="w-fit hidden md:block bg-green-600 text-white hover:bg-green-700">
-              <div className="flex gap-2">
-                Swafoto
-                <CheckCircle2 className="w-4 h-4 ml-1" />
-              </div>
-            </Badge>
-          </CardHeader>
-        </Card>
-      </div>
-
-      <div>{/* <pre>{JSON.stringify(session, null, 2)}</pre> */}</div>
-
-      {session.user.foto === 0 && <CheckFoto />}
+      {/* {session.user.foto === 0 && <CheckFoto />} */}
     </div>
   )
 }
