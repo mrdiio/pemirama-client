@@ -22,33 +22,8 @@ export default async function page() {
   // }
 
   return (
-    <div className="flex flex-col flex-grow gap-4">
-      <Card className="border-none shadow-none pt-4 rounded-none">
-        <CardHeader className="p-1 flex justify-center items-center gap-3">
-          <Image
-            src="https://satu.untan.ac.id/uploads/untan/fotomhs/F1012241002.jpg"
-            width={100}
-            height={100}
-            alt="Logo UNTAN"
-            className="w-32 h-32 object-cover rounded-full"
-          />
-
-          <div className="flex flex-col justify-center items-center">
-            <span className="text-xl font-semibold">{session.user.name}</span>
-            <div className="flex gap-2 items-center text-muted-foreground">
-              <GraduationCap size={16} />
-              {session.user.nim}
-            </div>
-
-            <div className="flex gap-2 items-center text-muted-foreground">
-              <MapPin size={16} />
-              {session.user.fakultas}
-            </div>
-          </div>
-        </CardHeader>
-      </Card>
-
-      <Card className="flex-1 bg-primary/50 rounded-2xl">
+    <div className="flex flex-col flex-grow -mt-7">
+      <Card className="flex-1 rounded-xl rounded-b-none border-black">
         <CardHeader>test</CardHeader>
       </Card>
 
