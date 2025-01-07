@@ -7,6 +7,7 @@ import Image from 'next/image'
 import voters from '@/assets/images/voters.png'
 import votes from '@/assets/images/bilik.png'
 import calendar from '@/assets/images/calendar.png'
+import { Info, Vote } from 'lucide-react'
 
 export default async function page() {
   const session = await getServerSession(authOptions)
@@ -17,21 +18,34 @@ export default async function page() {
 
   return (
     <div className="flex-1 flex flex-col gap-4">
+      <div className="flex flex-col px-2">
+        <div className="text-xl">
+          Halo, <span className="font-semibold">{session.user.name}</span>
+        </div>
+        <div className="text-muted-foreground">
+          Selamat datang di PEMIRAMA UNTAN
+        </div>
+      </div>
       <div className="grid sm:grid-cols-3 gap-4">
         <Card className="sm:col-span-2 bg-primary text-primary-foreground card-voter">
           <div className="flex h-full">
-            <div className="text-2xl p-6 flex-1 font-bold flex flex-col justify-center">
-              <div>
+            <div className="p-6 flex-1 flex flex-col justify-between">
+              <div className="text-2xl font-bold">
                 <span className="text-yellow-300">Ayo Voting</span>, Suaramu
                 Menentukan <span className="text-yellow-300">Masa Depan</span>
               </div>
 
-              <Button
-                variant="secondary"
-                className="mt-10 w-48 bg-yellow-300 hover:bg-yellow-400"
-              >
-                Mulai Vote
-              </Button>
+              <div className="space-y-1 mt-5">
+                <span className="flex items-center gap-1 text-xs text-muted">
+                  <Info size={12} /> Klik tombol dibawah untuk mulai memilih
+                </span>
+                <Button
+                  variant="secondary"
+                  className="w-48 uppercase bg-yellow-300 hover:bg-yellow-400"
+                >
+                  <Vote /> Vote
+                </Button>
+              </div>
             </div>
             <div className="hidden sm:flex justify-end items-end me-3 pt-3">
               <Image
@@ -71,7 +85,6 @@ export default async function page() {
           </Card>
         </div>
       </div>
-
       <div className="flex-grow bg-gray-400">
         <CheckFoto />
       </div>

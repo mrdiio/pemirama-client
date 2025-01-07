@@ -56,14 +56,14 @@ export default function Header({ auth }) {
                   <div className="w-72 flex items-center gap-4 border rounded-xl">
                     <Image
                       // src="https://satu.untan.ac.id/uploads/untan/fotomhs/F1012241002.jpg"
-                      src="https://satu.untan.ac.id/uploads/untan/fotomhs/D1041131014.jpg"
+                      src={`https://satu.untan.ac.id/uploads/untan/fotomhs/${auth.nim}.jpg`}
                       width={100}
                       height={100}
                       alt="Foto Siakad"
-                      className="rounded-xl"
+                      className="rounded-xl max-w-24"
                     />
                     <div className="flex flex-col space-y-0.5 font-normal pr-4">
-                      <span>Hi, {auth.name.split(' ')[0]} </span>
+                      <span className="font-semibold">{auth.name}</span>
                       <span className="text-muted-foreground">{auth.nim}</span>
                       <span>{auth.fakultas}</span>
                     </div>
