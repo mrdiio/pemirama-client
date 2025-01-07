@@ -20,8 +20,8 @@ body {
     --card-foreground: 20 14.3% 4.1%;
     --popover: 0 0% 100%;
     --popover-foreground: 20 14.3% 4.1%;
-    --primary: 47.9 95.8% 53.1%;
-    --primary-foreground: 26 83.3% 14.1%;
+    --primary: 240 65% 25%; /* Ganti dengan HSL dari #243184 */
+    --primary-foreground: 255 100% 98%; /* Sesuaikan jika perlu */
     --secondary: 60 4.8% 95.9%;
     --secondary-foreground: 24 9.8% 10%;
     --muted: 60 4.8% 95.9%;
@@ -76,4 +76,22 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.hero {
+  background: linear-gradient(
+      to right,
+      hsl(var(--primary) / 0.9),
+      hsl(var(--primary) / 0.7)
+    ),
+    hsl(var(--primary)) url('../assets/images/background-login.png');
+  @apply bg-cover bg-center;
+}
+
+.card-voter {
+  background: linear-gradient(to right,
+      hsl(var(--primary) / 0.9),
+      hsl(var(--primary) / 0.7)),
+    hsl(var(--primary)) url('../assets/images/background-login.png');
+  background-position: 100% 30%;
 }

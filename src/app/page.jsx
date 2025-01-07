@@ -7,9 +7,12 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { authOptions } from '@/lib/auth'
-import { Vote } from 'lucide-react'
 import { getServerSession } from 'next-auth'
+import Image from 'next/image'
 import { redirect } from 'next/navigation'
+import kotakSuara from '@/assets/images/kotak-suara.png'
+import { Separator } from '@/components/ui/separator'
+import logo from '@/assets/images/logo.png'
 
 export default async function Home() {
   const session = await getServerSession(authOptions)
@@ -19,49 +22,66 @@ export default async function Home() {
   }
 
   return (
-    <div className="w-full sm:grid sm:grid-cols-5 min-h-screen bg-primary/30 sm:bg-primary">
-      <div className="sm:col-span-3 sm:bg-yellow-50 pt-12 pb-3 container flex flex-col items-center gap-6">
-        <div className="w-full grid sm:grid-cols-5 gap-3 px-4">
-          <Card className="sm:col-span-4 bg-primary">
-            <CardHeader>
-              <CardTitle className="text-3xl uppercase">
-                Pemirama Online
-              </CardTitle>
-              <CardDescription className="text-lg uppercase sm:block hidden">
-                Universitas Tanjungpura
-              </CardDescription>
-            </CardHeader>
-          </Card>
-
-          <Card className="sm:col-span-1 flex items-center justify-center">
-            <CardHeader className="flex items-center">
-              <CardDescription>Suara Masuk</CardDescription>
-              <CardTitle className="text-3xl tracking-wider">1710</CardTitle>
-            </CardHeader>
-          </Card>
+    <div className="sm:grid sm:grid-cols-5 min-h-screen">
+      <div className="w-full sm:col-span-3 hero text-white flex flex-col justify-between sm:rounded-r-[60px]">
+        <div className="w-full flex flex-col gap-6 p-6 sm:p-8">
+          <div className="flex place-items-center gap-3">
+            <div className="w-12 sm:w-fit">
+              <Image
+                src={logo}
+                alt="Logo Untan"
+                width={80}
+                height={80}
+                className=""
+              />
+            </div>
+            <div>
+              <h1 className="text-2xl uppercase font-bold">Pemirama</h1>
+              <p className="text-lg sm:text-2xl capitalize">
+                Pemilihan Raya Mahasiswa
+              </p>
+            </div>
+          </div>
         </div>
 
-        <div className="sm:flex flex-1 items-center justify-center h-[50vh] hidden">
-          <Vote size={300} />
+        <div className="w-full hidden justify-center sm:flex">
+          <Image
+            src={kotakSuara}
+            alt="Logo Untan"
+            width={787}
+            height={692}
+            priority
+            className="object-scale-down h-full max-w-[750px]"
+          />
         </div>
       </div>
 
-      <div className="sm:col-span-2 flex flex-col items-center justify-center py-12 gap-3 px-4 sm:mx-5">
+      <div className="sm:col-span-2 flex flex-col items-center justify-center pt-12 px-5">
         <Card className={'w-full border-none shadow-none'}>
-          <CardHeader>
-            <CardTitle className="text-4xl tracking-wide">Login</CardTitle>
+          <CardHeader className="space-y-3">
+            <CardTitle className="text-5xl text-primary font-semibold tracking-wide">
+              Haloo!,
+            </CardTitle>
+            <Separator className="w-20 h-1.5 bg-primary" />
+
             <CardDescription>
-              Login menggunakan akun Satu Untan.
+              Selamat datang di website{' '}
+              <span className="font-semibold text-base">
+                Pemilihan Raya Mahasiswa Universitas Tanjungpura.
+              </span>{' '}
+              Silahkan login menggunakan akun{' '}
+              <span className="font-semibold uppercase">Satu Untan</span> untuk
+              melanjutkan ke pemilihan.
             </CardDescription>
           </CardHeader>
 
           <CardContent>
             <SignInForm />
+            <div className="w-full flex justify-center mt-3">
+              <small>2024 &copy; UPA. TIK UNTAN</small>
+            </div>
           </CardContent>
         </Card>
-        <div className="hidden sm:block">
-          <small>2024 &copy; UPA. TIK UNTAN</small>
-        </div>
       </div>
     </div>
   )
