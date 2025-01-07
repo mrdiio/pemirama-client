@@ -6,6 +6,7 @@ export const authOptions = {
     CredentialsProvider({
       async authorize(credentials) {
         const { email, password } = credentials
+
         const res = await loginService(email, password)
 
         const payload = {
@@ -20,13 +21,17 @@ export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: 'jwt',
-    maxAge: 60 * 60 * 15,
+    maxAge: 60 * 60,
   },
   pages: {
     signIn: '/',
   },
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, session, trigger }) {
+      if (trigger === 'update') {
+        token.user.foto = session.foto
+      }
+
       if (user) {
         const payload = {
           sub: user.user.id,
@@ -35,6 +40,7 @@ export const authOptions = {
           fakultas: user.user.fakultas,
           fakultas_id: user.user.code,
           program_studi: user.user.program_studi,
+          foto: 0,
         }
 
         token.user = payload
@@ -44,9 +50,7 @@ export const authOptions = {
       return token
     },
     async session({ session, token }) {
-      if (token) {
-        token.user.foto = 0
-      }
+      console.log('session token', token)
 
       session.user = token.user
       session.accessToken = token.accessToken
