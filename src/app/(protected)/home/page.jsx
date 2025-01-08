@@ -35,12 +35,13 @@ export default async function page() {
               </div>
 
               <div className="space-y-1 mt-5">
-                <span className="flex items-center gap-1 text-xs text-muted">
-                  <Info size={12} /> Klik tombol dibawah untuk mulai memilih
+                <span className="flex items-center gap-1 text-xs text-muted italic">
+                  <Info size={12} />
+                  Klik tombol dibawah untuk mulai memilih
                 </span>
                 <Button
                   variant="secondary"
-                  className="w-48 uppercase bg-yellow-300 hover:bg-yellow-400"
+                  className="w-48 uppercase bg-yellow-300 hover:bg-yellow-300/90"
                 >
                   <Vote /> Vote
                 </Button>
