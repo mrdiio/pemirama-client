@@ -4,7 +4,7 @@ import { uploadImageService, useCheckFotoQuery } from '@/services/voter.service'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import Webcam from 'react-webcam'
 import CheckFoto from '../home/check-foto'
 import Image from 'next/image'
@@ -17,7 +17,7 @@ export default function PemiramaCam() {
 
   const cekFotoQuery = useCheckFotoQuery()
 
-  const { mutate, isError, isSuccess, isPending } = useMutation({
+  const { mutateAsync, isError, isSuccess, isPending } = useMutation({
     mutationFn: uploadImageService,
     onSuccess: async () => {
       await update({
@@ -27,6 +27,7 @@ export default function PemiramaCam() {
       // queryClient.invalidateQueries('check-foto')
 
       // router.push('/home')
+      router.refresh()
 
       console.log(session)
     },
@@ -35,16 +36,22 @@ export default function PemiramaCam() {
     },
   })
 
-  cekFotoQuery.data && console.log(cekFotoQuery.data)
+  // cekFotoQuery.data && console.log(cekFotoQuery.data)
 
   const [image, setImage] = useState(null)
 
   const capture = useCallback(() => {
     const imageSrc = webcamRef.current.getScreenshot()
-    console.log(imageSrc) // Anda bisa mengirim gambar ini ke backend
+    // console.log(imageSrc) // Anda bisa mengirim gambar ini ke backend
     setImage(imageSrc)
     // mutate(imageSrc)
   }, [webcamRef])
+
+  useEffect(() => {
+    if (session?.user?.foto !== 1) {
+      router.push('/home')
+    }
+  }, [session, router])
 
   return (
     <div className="flex flex-col items-center gap-4">
@@ -75,7 +82,7 @@ export default function PemiramaCam() {
             <div>
               <Button
                 onClick={() => {
-                  mutate(image)
+                  mutateAsync(image)
                 }}
               >
                 Ya
@@ -92,7 +99,7 @@ export default function PemiramaCam() {
         )}
       </div>
 
-      <div>
+      {/* <div>
         {cekFotoQuery.data && cekFotoQuery.data.fotoUrl !== null && (
           <Image
             src={cekFotoQuery?.data?.fotoUrl}
@@ -102,7 +109,7 @@ export default function PemiramaCam() {
             priority
           />
         )}
-      </div>
+      </div> */}
     </div>
   )
 }

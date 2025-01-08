@@ -47,10 +47,12 @@ export const authOptions = {
         token.accessToken = user.accessToken
       }
 
+      console.log('token', token.user)
+
       return token
     },
     async session({ session, token }) {
-      // console.log('session token', token.user)
+      console.log('session token', token.user)
 
       session.user = token.user
       session.accessToken = token.accessToken

@@ -9,12 +9,13 @@ export default withAuth(
     const foto = token.user.foto
     const path = req.nextUrl.pathname
 
-    if (token && foto === 0) {
-      if (path !== '/take-selfie')
+    if (foto === 0) {
+      if (path !== '/take-selfie') {
         return NextResponse.redirect(new URL('/take-selfie', req.nextUrl))
+      }
     }
 
-    // console.log('from middleware', token)
+    console.log('from middleware', token)
 
     return NextResponse.next()
   },
