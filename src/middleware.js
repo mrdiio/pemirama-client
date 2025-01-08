@@ -4,18 +4,14 @@ import { NextResponse } from 'next/server'
 
 export default withAuth(
   async function middleware(req) {
-    const token = await getToken({ req })
+    const session = await getToken({ req })
 
-    const foto = token.user.foto
-    const path = req.nextUrl.pathname
+    const { user } = session
 
-    if (foto === 0) {
-      if (path !== '/take-selfie') {
-        return NextResponse.redirect(new URL('/take-selfie', req.nextUrl))
-      }
+    if (user.foto === 0) {
+      if (req.nextUrl.pathname !== '/take-selfie')
+        return NextResponse.redirect(new URL('/take-selfie', req.url))
     }
-
-    console.log('from middleware', token)
 
     return NextResponse.next()
   },

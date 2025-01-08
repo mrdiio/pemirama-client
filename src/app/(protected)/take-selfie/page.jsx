@@ -1,9 +1,15 @@
 import { getServerSession } from 'next-auth'
 import PemiramaCam from './pemirama-cam'
 import { authOptions } from '@/lib/auth'
+import { redirect } from 'next/navigation'
 
 export default async function page() {
   const session = await getServerSession(authOptions)
+
+  if (session.user.foto === 1) {
+    redirect('/home')
+  }
+
   return (
     <div>
       Take Selfie Page

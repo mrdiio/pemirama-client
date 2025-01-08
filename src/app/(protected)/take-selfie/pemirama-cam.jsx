@@ -1,62 +1,41 @@
 'use client'
 import { Button } from '@/components/ui/button'
-import { uploadImageService, useCheckFotoQuery } from '@/services/voter.service'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { uploadImageService } from '@/services/voter.service'
+import { useMutation } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import Webcam from 'react-webcam'
-import CheckFoto from '../home/check-foto'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
 export default function PemiramaCam() {
-  const queryClient = useQueryClient()
   const webcamRef = useRef(null)
   const router = useRouter()
-  const { data: session, status, update } = useSession()
+  const { update } = useSession()
 
-  const cekFotoQuery = useCheckFotoQuery()
-
-  const { mutateAsync, isError, isSuccess, isPending } = useMutation({
+  const { mutate, isError, isSuccess, isPending } = useMutation({
     mutationFn: uploadImageService,
     onSuccess: async () => {
       await update({
         foto: 1,
       })
 
-      // queryClient.invalidateQueries('check-foto')
-
-      // router.push('/home')
       router.refresh()
-
-      console.log(session)
     },
     onError: (error) => {
       console.error(error)
     },
   })
 
-  // cekFotoQuery.data && console.log(cekFotoQuery.data)
-
   const [image, setImage] = useState(null)
 
   const capture = useCallback(() => {
     const imageSrc = webcamRef.current.getScreenshot()
-    // console.log(imageSrc) // Anda bisa mengirim gambar ini ke backend
     setImage(imageSrc)
-    // mutate(imageSrc)
   }, [webcamRef])
-
-  useEffect(() => {
-    if (session?.user?.foto !== 1) {
-      router.push('/home')
-    }
-  }, [session, router])
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <CheckFoto />
-
       {!image && (
         <>
           <Webcam
@@ -82,7 +61,7 @@ export default function PemiramaCam() {
             <div>
               <Button
                 onClick={() => {
-                  mutateAsync(image)
+                  mutate(image)
                 }}
               >
                 Ya

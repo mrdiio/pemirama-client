@@ -1,11 +1,10 @@
 import { authOptions } from '@/lib/auth'
 import { getServerSession } from 'next-auth'
-import CheckFoto from './check-foto'
 import { Button } from '@/components/ui/button'
 import { Card, CardHeader } from '@/components/ui/card'
 import Image from 'next/image'
 import voters from '@/assets/images/voters.png'
-import votes from '@/assets/images/bilik.png'
+import vote from '@/assets/images/vote.png'
 import calendar from '@/assets/images/calendar.png'
 import { Info, Vote } from 'lucide-react'
 
@@ -75,11 +74,11 @@ export default async function page() {
 
           <Card className="border-l-8 border-l-primary flex items-center">
             <CardHeader className="flex flex-row items-center justify-center gap-4 p-2">
-              <Image src={votes} alt="calendar" width={60} height={60} />
+              <Image src={vote} alt="calendar" width={60} height={60} />
 
               <div className="flex flex-col">
                 <span className="text-sm">Suara Masuk</span>
-                <h1 className="text-3xl font-semibold">1710</h1>
+                <h1 className="text-2xl font-semibold">1710</h1>
               </div>
             </CardHeader>
           </Card>
