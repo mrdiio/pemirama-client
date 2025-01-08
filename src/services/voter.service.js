@@ -16,6 +16,7 @@ export const useCheckFotoQuery = () => {
   })
 }
 
+
 export const uploadImageService = async (file) => {
   const formData = new FormData()
   const blob = await fetch(file).then((r) => r.blob())
