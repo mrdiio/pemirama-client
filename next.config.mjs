@@ -22,6 +22,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'satu.untan.ac.id',
       },
+      {
+        protocol: 'https',
+        hostname: 'dummyimage.com',
+      },
     ],
   },
 }
