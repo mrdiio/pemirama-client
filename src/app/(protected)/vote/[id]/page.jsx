@@ -10,17 +10,16 @@ export default function Page({ params }) {
 
   const { data, isLoading, isFetching } = useCheckCategoryQuery()
 
-  const calonData = data && data.find((category) => category.id === params.id)
+  const calonData = data?.find((category) => category.id === params.id)
 
-  if (!calonData) {
+  if (data && !calonData) {
     redirect('/home')
   }
 
-  const currentIndex =
-    data && data.findIndex((category) => category.id === params.id)
-  const nextCategory = data[currentIndex + 1]
+  const currentIndex = data?.findIndex((category) => category.id === params.id)
+  const nextCategory = data?.[currentIndex + 1]
 
-  if (calonData.has_voted) {
+  if (data && calonData.has_voted) {
     redirect(nextCategory ? `/vote/${nextCategory.id}` : '/home')
   }
 
@@ -37,20 +36,7 @@ export default function Page({ params }) {
         </div>
       </div>
 
-      <CalonCard categoryId={params.id} />
-
-      <Button
-        className="mt-auto"
-        onClick={() => {
-          if (nextCategory) {
-            router.push(`/vote/${nextCategory.id}`)
-          } else {
-            router.push('/home')
-          }
-        }}
-      >
-        Pilih
-      </Button>
+      <CalonCard categoryId={params.id} nextCategory={nextCategory} />
     </div>
   )
 }

@@ -40,7 +40,10 @@ export default async function page() {
           Selamat datang di PEMIRAMA UNTAN
         </div>
       </div>
+
       <CardHome />
+
+      
     </div>
   )
 }

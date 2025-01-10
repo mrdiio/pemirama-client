@@ -6,7 +6,6 @@ export const useCheckFotoQuery = () => {
     queryKey: ['check-foto'],
     queryFn: async () => {
       const res = await apiClient.get('/check-foto')
-
       return res.data
     },
 
@@ -15,7 +14,6 @@ export const useCheckFotoQuery = () => {
     refetchIntervalInBackground: true,
   })
 }
-
 
 export const uploadImageService = async (file) => {
   const formData = new FormData()
@@ -27,6 +25,12 @@ export const uploadImageService = async (file) => {
       'Content-Type': 'multipart/form-data',
     },
   })
+
+  return res.data
+}
+
+export const storeVoteService = async (data) => {
+  const res = apiClient.post('/vote', data)
 
   return res.data
 }
