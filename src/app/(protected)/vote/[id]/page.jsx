@@ -9,17 +9,20 @@ export default function Page({ params }) {
   const router = useRouter()
 
   const { data, isLoading, isFetching } = useCheckCategoryQuery()
-  if (data) {
-    const isCategoryExist = data.some((category) => category.id === params.id)
-
-    const category = data.find((category) => category.id === params.id)
-
-    if (!isCategoryExist || category.hasVoted) {
-      redirect('/home')
-    }
-  }
 
   const calonData = data && data.find((category) => category.id === params.id)
+
+  if (!calonData) {
+    redirect('/home')
+  }
+
+  const currentIndex =
+    data && data.findIndex((category) => category.id === params.id)
+  const nextCategory = data[currentIndex + 1]
+
+  if (calonData.has_voted) {
+    redirect(nextCategory ? `/vote/${nextCategory.id}` : '/home')
+  }
 
   if (isLoading || isFetching) {
     return <div>Loading...</div>
@@ -39,12 +42,6 @@ export default function Page({ params }) {
       <Button
         className="mt-auto"
         onClick={() => {
-          const currentIndex = data.findIndex(
-            (category) => category.id === params.id
-          )
-
-          const nextCategory = data[currentIndex + 1]
-
           if (nextCategory) {
             router.push(`/vote/${nextCategory.id}`)
           } else {
