@@ -17,7 +17,7 @@ export default function PemiramaCam() {
     mutationFn: uploadImageService,
     onSuccess: async () => {
       await update({
-        foto: 1,
+        isSwafotoExist: true,
       })
 
       router.refresh()

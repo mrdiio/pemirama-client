@@ -36,7 +36,7 @@ export const authOptions = {
           fakultas: user.user.fakultas,
           fakultas_id: user.user.code,
           program_studi: user.user.program_studi,
-          foto: 0,
+          isSwafotoExist: user.user.isSwafotoExist,
         }
 
         token.user = payload
@@ -44,12 +44,16 @@ export const authOptions = {
       }
 
       if (trigger === 'update') {
-        token.user.foto = session.foto
+        token.user.isSwafotoExist = session.isSwafotoExist
       }
+
+      console.log('token', token)
 
       return token
     },
     async session({ session, token }) {
+      console.log('session', token)
+
       session.user = token.user
       session.accessToken = token.accessToken
       session.error = token.error || null

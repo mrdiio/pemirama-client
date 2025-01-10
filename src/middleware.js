@@ -8,7 +8,7 @@ export default withAuth(
 
     const { user } = session
 
-    if (user.foto === 0) {
+    if (!user.isSwafotoExist) {
       if (req.nextUrl.pathname !== '/take-selfie')
         return NextResponse.redirect(new URL('/take-selfie', req.url))
     }

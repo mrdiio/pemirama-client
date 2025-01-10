@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation'
 export default async function page() {
   const session = await getServerSession(authOptions)
 
-  if (session.user.foto === 1) {
+  if (!!session.user.isSwafotoExist) {
     redirect('/home')
   }
 

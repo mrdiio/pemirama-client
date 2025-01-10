@@ -11,7 +11,10 @@ export default function Page({ params }) {
   const { data, isLoading, isFetching } = useCheckCategoryQuery()
   if (data) {
     const isCategoryExist = data.some((category) => category.id === params.id)
-    if (!isCategoryExist) {
+
+    const category = data.find((category) => category.id === params.id)
+
+    if (!isCategoryExist || category.hasVoted) {
       redirect('/home')
     }
   }
