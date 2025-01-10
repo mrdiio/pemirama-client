@@ -12,12 +12,6 @@ export default function CalonCard({ categoryId }) {
 
   const [selectedCalon, setSelectedCalon] = useState(null)
 
-  const dummyImage = [
-    'https://dummyimage.com/500',
-    'https://dummyimage.com/720x400',
-    'https://dummyimage.com/300x400',
-  ]
-
   return (
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 px-4">
       {data &&
