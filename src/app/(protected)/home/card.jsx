@@ -1,6 +1,6 @@
 'use client'
 import { Button } from '@/components/ui/button'
-import { Card, CardHeader } from '@/components/ui/card'
+import { Card } from '@/components/ui/card'
 import { Check, Info, Vote } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -16,12 +16,6 @@ import InfoCard from './info-card'
 
 export default function CardHome() {
   const { data, isLoading, isFetching } = useCheckCategoryQuery()
-
-  const {
-    data: info,
-    isLoading: infoLoading,
-    isFetching: infoFetching,
-  } = useInfoQuery()
 
   const isVoted = data && !data.some((category) => !category.has_voted)
 
@@ -84,7 +78,7 @@ export default function CardHome() {
           </div>
         </Card>
 
-        <InfoCard info={info} loading={infoLoading || infoFetching} />
+        <InfoCard />
       </div>
 
       {isVoted && <VoteSuccessCard />}

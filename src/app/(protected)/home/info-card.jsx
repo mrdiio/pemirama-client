@@ -3,8 +3,12 @@ import Image from 'next/image'
 import vote from '@/assets/images/vote.png'
 import calendar from '@/assets/images/calendar.png'
 import { Skeleton } from '@/components/ui/skeleton'
+import { useInfoQuery } from '@/services/voter.service'
 
-export default function InfoCard({ info, loading }) {
+export default function InfoCard() {
+  const { data, isLoading, isFetching } = useInfoQuery()
+  const loading = isLoading || isFetching
+
   return (
     <div className="flex flex-col gap-4">
       <Card className="border-l-8 border-l-primary flex items-center">
@@ -18,10 +22,10 @@ export default function InfoCard({ info, loading }) {
                 <Skeleton className="w-48 h-[20px] bg-primary/10" />
                 <Skeleton className="w-48 h-[20px] bg-primary/10" />
               </div>
-            ) : info?.jadwal ? (
+            ) : data?.jadwal ? (
               <>
                 <h1 className="font-semibold">
-                  {info.jadwal.hari}, {info.jadwal.tanggal_format}
+                  {data.jadwal.hari}, {data.jadwal.tanggal_format}
                 </h1>
                 <span className="text-sm">09.00 - 16.00</span>
               </>
@@ -42,7 +46,7 @@ export default function InfoCard({ info, loading }) {
               {loading ? (
                 <Skeleton className="w-48 h-[32px] bg-primary/10" />
               ) : (
-                info.total_vote || 0
+                data.total_vote || 0
               )}
             </h1>
           </div>
