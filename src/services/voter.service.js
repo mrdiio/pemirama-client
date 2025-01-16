@@ -8,10 +8,6 @@ export const useCheckFotoQuery = () => {
       const res = await apiClient.get('/check-foto')
       return res.data
     },
-
-    refetchOnWindowFocus: true,
-    refetchOnMount: true,
-    refetchIntervalInBackground: true,
   })
 }
 
@@ -23,6 +19,16 @@ export const useInfoQuery = () => {
       return res.data
     },
   })
+}
+
+export const checkFotoService = async (token) => {
+  const res = await apiClient.get('/check-foto', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  return res.data
 }
 
 export const uploadImageService = async (file) => {

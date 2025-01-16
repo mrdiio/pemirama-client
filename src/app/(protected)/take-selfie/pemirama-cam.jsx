@@ -7,14 +7,17 @@ import { useCallback, useRef, useState } from 'react'
 import Webcam from 'react-webcam'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { Loader2 } from 'lucide-react'
 
 export default function PemiramaCam() {
   const webcamRef = useRef(null)
   const router = useRouter()
   const { update } = useSession()
+  const [loading, setLoading] = useState(false)
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: uploadImageService,
+    onMutate: () => setLoading(true),
     onSuccess: async () => {
       await update({
         isSwafotoExist: true,
@@ -24,6 +27,7 @@ export default function PemiramaCam() {
     },
     onError: (error) => {
       console.error(error)
+      setLoading(false)
     },
   })
 
@@ -60,7 +64,11 @@ export default function PemiramaCam() {
                 onClick={() => {
                   mutate(image)
                 }}
+                disabled={isPending || loading}
               >
+                {(isPending || loading) && (
+                  <Loader2 size={16} className="animate-spin" />
+                )}
                 Ya
               </Button>
               <Button
@@ -68,6 +76,7 @@ export default function PemiramaCam() {
                 onClick={() => {
                   setImage(null)
                 }}
+                disabled={isPending || loading}
               >
                 Tidak, ambil ulang
               </Button>
@@ -75,18 +84,6 @@ export default function PemiramaCam() {
           </div>
         )}
       </div>
-
-      {/* <div>
-        {cekFotoQuery.data && cekFotoQuery.data.fotoUrl !== null && (
-          <Image
-            src={cekFotoQuery?.data?.fotoUrl}
-            width={320}
-            height={240}
-            alt="voter"
-            priority
-          />
-        )}
-      </div> */}
     </div>
   )
 }

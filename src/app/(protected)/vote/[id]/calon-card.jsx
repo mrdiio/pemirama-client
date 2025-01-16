@@ -34,7 +34,7 @@ export default function CalonCard({ categoryId, nextCategory }) {
     },
   })
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: storeVoteService,
     onSuccess: async () => {
       toast({
@@ -155,7 +155,10 @@ export default function CalonCard({ categoryId, nextCategory }) {
                 {form.formState.errors.calon_id.message}
               </FormMessage>
             )}
-            <Button type="submit" className="">
+            <Button
+              type="submit"
+              disabled={isPending || isLoading || isFetching}
+            >
               Pilih
             </Button>
           </div>

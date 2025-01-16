@@ -1,4 +1,5 @@
 import { loginService } from '@/services/auth.service'
+import { checkFotoService } from '@/services/voter.service'
 import CredentialsProvider from 'next-auth/providers/credentials'
 
 export const authOptions = {
@@ -55,6 +56,16 @@ export const authOptions = {
       session.error = token.error || null
 
       return session
+    },
+  },
+  events: {
+    session: async ({ session, token }) => {
+      const checkFoto = await checkFotoService(session.accessToken)
+      // console.log(checkFoto)
+      token.user.isSwafotoExist = checkFoto.isExist
+    },
+    updateUser: async ({ user, account, profile, isNewUser }) => {
+      user.isSwafotoExist = profile.isSwafotoExist
     },
   },
 }

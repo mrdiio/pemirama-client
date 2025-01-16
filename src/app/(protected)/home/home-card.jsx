@@ -12,9 +12,62 @@ import { Badge } from '@/components/ui/badge'
 import VoteSuccessCard from './vote-success-card'
 import CategoryListCard from './category-list-card'
 import InfoCard from './info-card'
+import { signOut, useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog'
+import { useState } from 'react'
 
 export default function HomeCard() {
+  const router = useRouter()
   const { data, isLoading, isFetching } = useCheckCategoryQuery()
+  const { data: session } = useSession()
+  const [loading, setLoading] = useState(false)
+
+  if (session && !session.user.isSwafotoExist) {
+    return (
+      <AlertDialog open={true}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Maaf, Swafoto Anda Belum Ada.</AlertDialogTitle>
+            <AlertDialogDescription>
+              Silahkan ambil swafoto terlebih dahulu sebelum melakukan
+              pemilihan.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel
+              onClick={() => {
+                signOut()
+              }}
+            >
+              Logout
+            </AlertDialogCancel>
+            <AlertDialogAction
+              disabled={loading}
+              onClick={() => {
+                setLoading(true)
+                setTimeout(() => {
+                  router.refresh()
+                }, 1500)
+                router.push('/take-selfie')
+              }}
+            >
+              Ambil Swafoto
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    )
+  }
 
   const isVoted = data && !data.some((category) => !category.has_voted)
 
