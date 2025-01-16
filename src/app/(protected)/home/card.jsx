@@ -7,7 +7,6 @@ import Link from 'next/link'
 import voters from '@/assets/images/voters.png'
 
 import { useCheckCategoryQuery } from '@/services/calon.service'
-import { useInfoQuery } from '@/services/voter.service'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Badge } from '@/components/ui/badge'
 import VoteSuccessCard from './vote-success-card'
