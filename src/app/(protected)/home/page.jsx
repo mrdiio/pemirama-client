@@ -1,6 +1,5 @@
 import { authOptions } from '@/lib/auth'
 import { getServerSession } from 'next-auth'
-import CardHome from './card'
 import { CheckCircle2 } from 'lucide-react'
 import {
   Tooltip,
@@ -8,6 +7,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
+import HomeCard from './home-card'
 
 export default async function page() {
   const session = await getServerSession(authOptions)
@@ -41,9 +41,7 @@ export default async function page() {
         </div>
       </div>
 
-      <CardHome />
-
-      
+      <HomeCard />
     </div>
   )
 }

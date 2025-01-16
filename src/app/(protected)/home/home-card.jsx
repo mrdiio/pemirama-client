@@ -13,7 +13,7 @@ import VoteSuccessCard from './vote-success-card'
 import CategoryListCard from './category-list-card'
 import InfoCard from './info-card'
 
-export default function CardHome() {
+export default function HomeCard() {
   const { data, isLoading, isFetching } = useCheckCategoryQuery()
 
   const isVoted = data && !data.some((category) => !category.has_voted)
