@@ -14,7 +14,7 @@ import { toast } from '@/hooks/use-toast'
 import { useCalonQuery } from '@/services/calon.service'
 import { storeVoteService } from '@/services/voter.service'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Check } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -29,6 +29,7 @@ const formSchema = z.object({
 export default function CalonCard({ categoryId, nextCategory }) {
   const router = useRouter()
   const { data } = useCalonQuery(categoryId)
+  const queryClient = useQueryClient()
 
   const [selectedCalon, setSelectedCalon] = useState(null)
 
@@ -56,11 +57,18 @@ export default function CalonCard({ categoryId, nextCategory }) {
         description: 'Berhasil memilih calon',
       })
 
+      console.log('sudah')
+      router.refresh()
+      queryClient.invalidateQueries('checkCategory')
+
       if (nextCategory) {
         router.push(`/vote/${nextCategory.id}`)
       } else {
         router.push('/home')
       }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries('checkCategory')
     },
   })
 

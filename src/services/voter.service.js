@@ -15,6 +15,16 @@ export const useCheckFotoQuery = () => {
   })
 }
 
+export const useInfoQuery = () => {
+  return useQuery({
+    queryKey: ['info'],
+    queryFn: async () => {
+      const res = await apiClient.get('/info')
+      return res.data
+    },
+  })
+}
+
 export const uploadImageService = async (file) => {
   const formData = new FormData()
   const blob = await fetch(file).then((r) => r.blob())

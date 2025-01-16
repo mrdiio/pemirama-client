@@ -1,16 +1,21 @@
 'use client'
 import { Button } from '@/components/ui/button'
 import { Card, CardHeader } from '@/components/ui/card'
-import { Info, Vote } from 'lucide-react'
+import { Check, Info, Vote } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import voters from '@/assets/images/voters.png'
 import vote from '@/assets/images/vote.png'
 import calendar from '@/assets/images/calendar.png'
 import { useCheckCategoryQuery } from '@/services/calon.service'
+import { useInfoQuery } from '@/services/voter.service'
 
 export default function CardHome() {
   const { data } = useCheckCategoryQuery()
+
+  const { data: info } = useInfoQuery()
+
+  info && console.log(info)
 
   const isVoted = data && !data.some((category) => !category.has_voted)
 
@@ -26,23 +31,28 @@ export default function CardHome() {
               </div>
 
               <div className="mt-5">
-                {data && data.length > 0 && (
-                  <>
-                    <span className="flex items-center gap-1 text-xs text-muted italic">
-                      <Info size={12} />
-                      Klik tombol dibawah untuk mulai memilih
-                    </span>
+                <div>
+                  <span className="flex items-center gap-1 text-xs text-muted italic">
+                    <Info size={12} />
+                    Klik tombol dibawah untuk mulai memilih
+                  </span>
 
-                    <Link href={`/vote/${data?.[0]?.id}`}>
-                      <Button
-                        variant="secondary"
-                        className="w-48 uppercase bg-yellow-300 hover:bg-yellow-300/90"
-                      >
+                  <Button
+                    asChild
+                    variant="secondary"
+                    className="w-48 bg-yellow-300 hover:bg-yellow-300/90"
+                  >
+                    {isVoted ? (
+                      <span>
+                        <Check /> Sudah Memilih
+                      </span>
+                    ) : (
+                      <Link href={`/vote/${data?.[0]?.id}`}>
                         <Vote /> Vote
-                      </Button>
-                    </Link>
-                  </>
-                )}
+                      </Link>
+                    )}
+                  </Button>
+                </div>
               </div>
             </div>
             <div className="hidden sm:flex justify-end items-end me-3 pt-3">
@@ -65,8 +75,16 @@ export default function CardHome() {
 
               <div>
                 <span className="text-sm">Waktu Pelaksanaan</span>
-                <h1 className="text-lg font-semibold">20 September 2025</h1>
-                <span>09.00 - 16.00</span>
+                {info?.jadwal ? (
+                  <>
+                    <h1 className="font-semibold">
+                      {info.jadwal.hari}, {info.jadwal.tanggal_format}
+                    </h1>
+                    <span className="text-sm">09.00 - 16.00</span>
+                  </>
+                ) : (
+                  <p className="text-sm">Belum ada jadwal</p>
+                )}
               </div>
             </CardHeader>
           </Card>
@@ -77,7 +95,9 @@ export default function CardHome() {
 
               <div className="flex flex-col">
                 <span className="text-sm">Suara Masuk</span>
-                <h1 className="text-2xl font-semibold">1710</h1>
+                <h1 className="text-2xl font-semibold">
+                  {info?.total_vote || 0}
+                </h1>
               </div>
             </CardHeader>
           </Card>
