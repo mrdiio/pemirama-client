@@ -13,7 +13,7 @@ export default function PemiramaCam() {
   const router = useRouter()
   const { update } = useSession()
 
-  const { mutate, isError, isSuccess, isPending } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: uploadImageService,
     onSuccess: async () => {
       await update({
@@ -35,7 +35,7 @@ export default function PemiramaCam() {
   }, [webcamRef])
 
   return (
-    <div className="flex flex-col items-center gap-4">
+    <div className="flex flex-col items-center gap-4 ">
       {!image && (
         <>
           <Webcam
@@ -45,20 +45,17 @@ export default function PemiramaCam() {
             height={720}
             mirrored={true}
           />
-          <Button onClick={capture}>Capture</Button>
-          {isError && <p>Error</p>}
-          {isSuccess && <p>Success</p>}
-          {isPending && <p>Loading...</p>}
+          <Button onClick={capture}>Ambil Gambar</Button>
         </>
       )}
 
       <div>
         {image && (
-          <>
+          <div className="flex flex-col items-center gap-4">
             <Image src={image} width={320} height={240} alt="voter" />
 
-            <span>pakai foto ini?</span>
-            <div>
+            <span>Gunakan foto ini?</span>
+            <div className="flex gap-2">
               <Button
                 onClick={() => {
                   mutate(image)
@@ -67,6 +64,7 @@ export default function PemiramaCam() {
                 Ya
               </Button>
               <Button
+                variant="destructive"
                 onClick={() => {
                   setImage(null)
                 }}
@@ -74,7 +72,7 @@ export default function PemiramaCam() {
                 Tidak, ambil ulang
               </Button>
             </div>
-          </>
+          </div>
         )}
       </div>
 
