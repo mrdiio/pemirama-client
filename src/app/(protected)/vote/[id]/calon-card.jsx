@@ -2,14 +2,8 @@
 
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form'
+import { Form, FormField, FormItem, FormMessage } from '@/components/ui/form'
+import { Skeleton } from '@/components/ui/skeleton'
 import { toast } from '@/hooks/use-toast'
 import { useCalonQuery } from '@/services/calon.service'
 import { storeVoteService } from '@/services/voter.service'
@@ -28,7 +22,7 @@ const formSchema = z.object({
 
 export default function CalonCard({ categoryId, nextCategory }) {
   const router = useRouter()
-  const { data } = useCalonQuery(categoryId)
+  const { data, isLoading, isFetching } = useCalonQuery(categoryId)
   const queryClient = useQueryClient()
 
   const [selectedCalon, setSelectedCalon] = useState(null)
@@ -40,15 +34,6 @@ export default function CalonCard({ categoryId, nextCategory }) {
     },
   })
 
-  // const onSubmit = async (values) => {
-  //   console.log(values)
-  //   if (nextCategory) {
-  //     router.push(`/vote/${nextCategory.id}`)
-  //   } else {
-  //     router.push('/home')
-  //   }
-  // }
-
   const { mutate } = useMutation({
     mutationFn: storeVoteService,
     onSuccess: async () => {
@@ -57,9 +42,8 @@ export default function CalonCard({ categoryId, nextCategory }) {
         description: 'Berhasil memilih calon',
       })
 
-      console.log('sudah')
-      router.refresh()
       queryClient.invalidateQueries('checkCategory')
+      queryClient.invalidateQueries('info')
 
       if (nextCategory) {
         router.push(`/vote/${nextCategory.id}`)
@@ -67,15 +51,20 @@ export default function CalonCard({ categoryId, nextCategory }) {
         router.push('/home')
       }
     },
-    onSettled: () => {
-      queryClient.invalidateQueries('checkCategory')
+    onError: (error) => {
+      router.push('/home')
+      toast({
+        title: 'Tidak dapat memilih calon',
+        description: error.response.data.message,
+        variant: 'destructive',
+      })
     },
   })
 
   useEffect(() => {
     if (form.formState.errors?.calon_id) {
       toast({
-        title: 'Error !!!',
+        title: 'Terjadi Kesalahan',
         description: form.formState.errors.calon_id.message,
         variant: 'destructive',
       })
@@ -95,13 +84,20 @@ export default function CalonCard({ categoryId, nextCategory }) {
             render={() => (
               <FormItem>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 px-4">
-                  {data &&
+                  {isLoading || isFetching ? (
+                    <>
+                      <Skeleton className="w-full h-72 bg-primary/10" />
+                      <Skeleton className="w-full h-72 bg-primary/10" />
+                      <Skeleton className="w-full h-72 bg-primary/10" />
+                    </>
+                  ) : (
+                    data &&
                     data.map((calon) => (
                       <Card
                         key={calon.id}
                         className={`group relative flex flex-col 
-                        overflow-hidden rounded-lg bg-white cursor-pointer 
-                        transition-all hover:scale-105 hover:border-primary hover:border-3`}
+                          overflow-hidden rounded-lg bg-white cursor-pointer 
+                          transition-all hover:scale-105 hover:border-primary hover:border-3`}
                         onClick={() => {
                           setSelectedCalon(calon.id)
                           form.setValue('calon_id', calon.id)
@@ -146,7 +142,8 @@ export default function CalonCard({ categoryId, nextCategory }) {
                           </div>
                         </div>
                       </Card>
-                    ))}
+                    ))
+                  )}
                 </div>
               </FormItem>
             )}

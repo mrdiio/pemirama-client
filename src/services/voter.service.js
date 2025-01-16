@@ -30,7 +30,7 @@ export const uploadImageService = async (file) => {
   const blob = await fetch(file).then((r) => r.blob())
   formData.append('image', blob, 'image.jpg')
 
-  const res = apiClient.post('/upload-voter-image', formData, {
+  const res = await apiClient.post('/upload-voter-image', formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
@@ -40,7 +40,7 @@ export const uploadImageService = async (file) => {
 }
 
 export const storeVoteService = async (data) => {
-  const res = apiClient.post('/vote', data)
+  const res = await apiClient.post('/vote', data)
 
   return res.data
 }

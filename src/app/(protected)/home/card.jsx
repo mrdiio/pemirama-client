@@ -5,17 +5,23 @@ import { Check, Info, Vote } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import voters from '@/assets/images/voters.png'
-import vote from '@/assets/images/vote.png'
-import calendar from '@/assets/images/calendar.png'
+
 import { useCheckCategoryQuery } from '@/services/calon.service'
 import { useInfoQuery } from '@/services/voter.service'
+import { Skeleton } from '@/components/ui/skeleton'
+import { Badge } from '@/components/ui/badge'
+import VoteSuccessCard from './vote-success-card'
+import CategoryListCard from './category-list-card'
+import InfoCard from './info-card'
 
 export default function CardHome() {
-  const { data } = useCheckCategoryQuery()
+  const { data, isLoading, isFetching } = useCheckCategoryQuery()
 
-  const { data: info } = useInfoQuery()
-
-  info && console.log(info)
+  const {
+    data: info,
+    isLoading: infoLoading,
+    isFetching: infoFetching,
+  } = useInfoQuery()
 
   const isVoted = data && !data.some((category) => !category.has_voted)
 
@@ -31,27 +37,37 @@ export default function CardHome() {
               </div>
 
               <div className="mt-5">
-                <div>
-                  <span className="flex items-center gap-1 text-xs text-muted italic">
-                    <Info size={12} />
-                    Klik tombol dibawah untuk mulai memilih
-                  </span>
-
-                  <Button
-                    asChild
-                    variant="secondary"
-                    className="w-48 bg-yellow-300 hover:bg-yellow-300/90"
-                  >
-                    {isVoted ? (
-                      <span>
-                        <Check /> Sudah Memilih
+                <div className="space-y-1">
+                  {isLoading || isFetching ? (
+                    <div>
+                      <Skeleton className="w-48 h-[40px]" />
+                    </div>
+                  ) : isVoted ? (
+                    <Badge
+                      variant={'destructive'}
+                      className={'py-3 px-4 rounded-md w-48'}
+                    >
+                      <Check size={16} className="me-2" />
+                      Anda Sudah Memilih
+                    </Badge>
+                  ) : (
+                    <>
+                      <span className="flex items-center gap-1 text-xs text-muted italic">
+                        <Info size={12} />
+                        Klik tombol dibawah untuk mulai memilih
                       </span>
-                    ) : (
-                      <Link href={`/vote/${data?.[0]?.id}`}>
-                        <Vote /> Vote
-                      </Link>
-                    )}
-                  </Button>
+
+                      <Button
+                        asChild
+                        variant="secondary"
+                        className="w-48 bg-yellow-300 hover:bg-yellow-300/90"
+                      >
+                        <Link href={`/vote/${data?.[0]?.id}`}>
+                          <Vote /> Vote
+                        </Link>
+                      </Button>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -68,56 +84,12 @@ export default function CardHome() {
           </div>
         </Card>
 
-        <div className="flex flex-col gap-4">
-          <Card className="border-l-8 border-l-primary flex items-center">
-            <CardHeader className="flex flex-row items-center justify-center gap-4 p-2">
-              <Image src={calendar} alt="calendar" width={60} height={60} />
-
-              <div>
-                <span className="text-sm">Waktu Pelaksanaan</span>
-                {info?.jadwal ? (
-                  <>
-                    <h1 className="font-semibold">
-                      {info.jadwal.hari}, {info.jadwal.tanggal_format}
-                    </h1>
-                    <span className="text-sm">09.00 - 16.00</span>
-                  </>
-                ) : (
-                  <p className="text-sm">Belum ada jadwal</p>
-                )}
-              </div>
-            </CardHeader>
-          </Card>
-
-          <Card className="border-l-8 border-l-primary flex items-center">
-            <CardHeader className="flex flex-row items-center justify-center gap-4 p-2">
-              <Image src={vote} alt="calendar" width={60} height={60} />
-
-              <div className="flex flex-col">
-                <span className="text-sm">Suara Masuk</span>
-                <h1 className="text-2xl font-semibold">
-                  {info?.total_vote || 0}
-                </h1>
-              </div>
-            </CardHeader>
-          </Card>
-        </div>
+        <InfoCard info={info} loading={infoLoading || infoFetching} />
       </div>
 
-      {isVoted && (
-        <Card className="bg-primary/10 text-secodanry-foreground">
-          <div className="flex flex-col items-center gap-4 p-6">
-            <span className="text-2xl font-bold">
-              Terima kasih telah memilih
-            </span>
-            <span className="text-muted-foreground">
-              Suara anda telah tercatat, hasil pemilihan akan diumumkan setelah
-              pemilihan selesai
-            </span>
-          </div>
-        </Card>
-      )}
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+      {isVoted && <VoteSuccessCard />}
+
+      <CategoryListCard data={data} loading={isLoading || isFetching} />
     </>
   )
 }

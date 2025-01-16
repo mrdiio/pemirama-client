@@ -18,6 +18,11 @@ import { useState } from 'react'
 import { Loader2 } from 'lucide-react'
 import { signIn } from 'next-auth/react'
 import { useToast } from '@/hooks/use-toast'
+import { useInfoQuery } from '@/services/voter.service'
+import moment from 'moment'
+import 'moment/locale/id'
+import { Card } from '../ui/card'
+import { Skeleton } from '../ui/skeleton'
 
 const formSchema = z.object({
   email: z.string().min(1, 'Email is required').email(),
@@ -25,8 +30,18 @@ const formSchema = z.object({
 })
 
 export default function SignInForm() {
+  moment.locale('id')
   const router = useRouter()
   const { toast } = useToast()
+
+  const { data, isLoading, isFetching } = useInfoQuery()
+
+  // check jadwal with moment between
+  const start = data && moment(`${data?.jadwal.tanggal} ${data?.jadwal.mulai}`)
+  const end = data && moment(`${data?.jadwal.tanggal} ${data?.jadwal.selesai}`)
+  const now = moment()
+
+  const isOnSchedule = now.isBetween(start, end)
 
   const [loading, setLoading] = useState(false)
 
@@ -54,7 +69,7 @@ export default function SignInForm() {
       })
 
       toast({
-        title: 'Error Login',
+        title: 'Terjadi Kesalahan',
         description: login.error,
         variant: 'destructive',
       })
@@ -67,7 +82,19 @@ export default function SignInForm() {
     }
   }
 
-  return (
+  return isLoading || isFetching ? (
+    <Skeleton className="w-full h-36 bg-primary/10" />
+  ) : !isOnSchedule ? (
+    <Card className="flex justify-center items-center py-10 bg-red-50 px-2">
+      <div className="text-center space-y-2">
+        <h2 className="text-2xl font-bold">Pemilihan Ditutup</h2>
+        <p className="text-sm text-gray-500">
+          Jadwal Pemilihan : {start.format('dddd, DD MMMM YYYY')} Pukul{' '}
+          {start.format('HH:mm')} -{end.format('HH:mm')}
+        </p>
+      </div>
+    </Card>
+  ) : (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(formSubmit)} className="space-y-4">
         <FormField
