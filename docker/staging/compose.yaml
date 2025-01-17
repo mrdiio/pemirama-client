@@ -1,0 +1,10 @@
+services:
+  pemirama-staging:
+    build:
+      context: ../../
+      dockerfile: docker/staging/Dockerfile
+    image: mrdiio/pemirama-staging
+    env_file:
+      - ../../.env.staging
+    ports:
+      - '5001:3000'

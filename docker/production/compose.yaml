@@ -1,0 +1,10 @@
+services:
+  pemirama-production:
+    build:
+      context: ../../
+      dockerfile: docker/production/Dockerfile
+    image: mrdiio/pemirama-production
+    env_file:
+      - ../../.env.production
+    ports:
+      - '5003:3000'
