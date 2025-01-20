@@ -4,7 +4,6 @@ services:
       context: ../../
       dockerfile: docker/staging/Dockerfile
     image: mrdiio/pemirama-staging
-    env_file:
-      - ../../.env.staging
+    container_name: pemirama-staging
     ports:
       - '5001:3000'

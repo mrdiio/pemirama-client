@@ -4,7 +4,7 @@ services:
       context: ../../
       dockerfile: docker/production/Dockerfile
     image: mrdiio/pemirama-production
-    env_file:
-      - ../../.env.production
+    container_name: pemirama-production
+    restart: unless-stopped
     ports:
       - '5003:3000'
