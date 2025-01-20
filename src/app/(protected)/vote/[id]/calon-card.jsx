@@ -9,7 +9,7 @@ import { useCalonQuery } from '@/services/calon.service'
 import { storeVoteService } from '@/services/voter.service'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Check } from 'lucide-react'
+import { Check, Loader2 } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -159,6 +159,7 @@ export default function CalonCard({ categoryId, nextCategory }) {
               type="submit"
               disabled={isPending || isLoading || isFetching}
             >
+              {isPending && <Loader2 className="animate-spin" />}
               Pilih
             </Button>
           </div>

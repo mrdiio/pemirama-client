@@ -11,20 +11,20 @@ import { CheckSquare2, XSquare } from 'lucide-react'
 export default function CategoryListCard({ data, loading }) {
   return (
     <Card className="border-t-8 border-t-primary">
-      <CardHeader>
-        <CardTitle>Kategori Calon</CardTitle>
-        <CardDescription>
+      <CardHeader className="space-y-0">
+        <CardTitle className="text-xl">Kategori Calon</CardTitle>
+        <CardDescription className="text-xs">
           Daftar kategori calon yang dapat anda pilih.
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
           {loading ? (
             <>
-              <Skeleton className="w-full h-24" />
-              <Skeleton className="w-full h-24" />
-              <Skeleton className="w-full h-24" />
-              <Skeleton className="w-full h-24" />
+              <Skeleton className="w-full h-16" />
+              <Skeleton className="w-full h-16" />
+              <Skeleton className="w-full h-16" />
+              <Skeleton className="w-full h-16" />
             </>
           ) : data.length === 0 ? (
             <p className="text-sm text-muted-foreground italic">
@@ -38,12 +38,12 @@ export default function CategoryListCard({ data, loading }) {
                   category.has_voted ? 'bg-green-50' : 'bg-red-50'
                 }`}
               >
-                <CardHeader>
+                <CardHeader className="p-3">
                   <div className="flex items-center gap-2">
                     {category.has_voted ? (
-                      <CheckSquare2 size={48} className="text-green-500" />
+                      <CheckSquare2 size={24} className="text-green-500" />
                     ) : (
-                      <XSquare size={48} className="text-red-500" />
+                      <XSquare size={26} className="text-red-500" />
                     )}
                     <div className="">
                       <p className="text-xs">
@@ -51,7 +51,7 @@ export default function CategoryListCard({ data, loading }) {
                           ? 'Anda sudah memilih'
                           : 'Anda belum memilih'}
                       </p>
-                      <p className=" font-medium">{category.name}</p>
+                      <p className="text-sm font-medium">{category.name}</p>
                     </div>
                   </div>
                 </CardHeader>

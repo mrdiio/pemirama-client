@@ -1,0 +1,10 @@
+services:
+  pemirama-production:
+    build:
+      context: ../../
+      dockerfile: docker/production/Dockerfile
+    image: mrdiio/pemirama-production
+    container_name: pemirama-production
+    restart: unless-stopped
+    ports:
+      - '5003:3000'

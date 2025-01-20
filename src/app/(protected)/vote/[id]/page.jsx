@@ -39,10 +39,10 @@ export default function Page({ params }) {
       </div>
 
       {isLoading || isFetching ? (
-        <div className="px-4 py-3 flex gap-6">
-          <Skeleton className="w-full sm:w-4/12 h-72 bg-primary/10" />
-          <Skeleton className="w-full sm:w-4/12 h-72 bg-primary/10" />
-          <Skeleton className="w-full sm:w-4/12 h-72 bg-primary/10" />
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 px-4">
+          <Skeleton className="w-full h-72 bg-primary/10" />
+          <Skeleton className="w-full h-72 bg-primary/10" />
+          <Skeleton className="w-full h-72 bg-primary/10" />
         </div>
       ) : (
         <CalonCard categoryId={params.id} nextCategory={nextCategory} />

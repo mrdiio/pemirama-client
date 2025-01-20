@@ -83,7 +83,9 @@ export default function SignInForm() {
   }
 
   return isLoading || isFetching ? (
-    <Skeleton className="w-full h-36 bg-primary/10" />
+    <Skeleton className="w-full h-36 bg-primary/10 flex items-center justify-center">
+      <Loader2 className="animate-spin text-gray-400" size={48} />
+    </Skeleton>
   ) : !isOnSchedule ? (
     <Card className="flex justify-center items-center py-10 bg-red-50 px-2">
       <div className="text-center space-y-2">

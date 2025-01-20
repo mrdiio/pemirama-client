@@ -13,6 +13,8 @@ export const loginService = async (email, password) => {
     const res = await authApi.post('/login-mhs', { email, password })
     return res.data
   } catch (error) {
+    console.log(error)
+
     if (error.response.status === 500) {
       throw new Error('Server error')
     }
