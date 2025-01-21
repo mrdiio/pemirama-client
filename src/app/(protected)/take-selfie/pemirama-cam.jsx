@@ -26,7 +26,6 @@ export default function PemiramaCam() {
       router.refresh()
     },
     onError: (error) => {
-      console.error(error)
       setLoading(false)
     },
   })

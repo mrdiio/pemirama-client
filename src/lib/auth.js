@@ -61,7 +61,6 @@ export const authOptions = {
   events: {
     session: async ({ session, token }) => {
       const checkFoto = await checkFotoService(session.accessToken)
-      // console.log(checkFoto)
       token.user.isSwafotoExist = checkFoto.isExist
     },
     updateUser: async ({ user, account, profile, isNewUser }) => {
