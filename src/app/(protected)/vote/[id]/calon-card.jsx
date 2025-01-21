@@ -105,7 +105,7 @@ export default function CalonCard({ categoryId, nextCategory }) {
                       >
                         <div className="relative">
                           <Image
-                            src={`http://pemirama-new.test/images/${calon.image_url}`}
+                            src={`${process.env.NEXT_PUBLIC_API_URL}/images/${calon.image_url}`}
                             alt={calon.category}
                             width={500}
                             height={500}

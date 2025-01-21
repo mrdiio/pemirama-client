@@ -16,6 +16,10 @@ const nextConfig = {
         pathname: '/api/**',
       },
       {
+        protocol: 'https',
+        hostname: 'dashboard.pemirama.untan.ac.id',
+      },
+      {
         protocol: 'http',
         hostname: 'pemirama-new.test',
       },
