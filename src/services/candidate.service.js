@@ -11,11 +11,11 @@ export const useCheckCategoryQuery = () => {
   })
 }
 
-export const useCalonQuery = (id) => {
+export const useCandidateQuery = (id) => {
   return useQuery({
-    queryKey: ['calon', id],
+    queryKey: ['candidates', id],
     queryFn: async () => {
-      const res = await apiClient.get(`/calon/${id}`)
+      const res = await apiClient.get(`/candidates/${id}`)
       return res.data
     },
   })

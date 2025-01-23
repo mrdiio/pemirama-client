@@ -1,23 +1,23 @@
 'use client'
 
-import { useCheckCategoryQuery } from '@/services/calon.service'
+import { useCheckCategoryQuery } from '@/services/candidate.service'
 import { redirect } from 'next/navigation'
-import CalonCard from './calon-card'
 import { Skeleton } from '@/components/ui/skeleton'
+import CandidateCard from './candidate-card'
 
 export default function Page({ params }) {
   const { data, isLoading, isFetching } = useCheckCategoryQuery()
 
-  const calonData = data?.find((category) => category.id === params.id)
+  const candidateData = data?.find((category) => category.id === params.id)
 
-  if (data && !calonData) {
+  if (data && !candidateData) {
     redirect('/home')
   }
 
   const currentIndex = data?.findIndex((category) => category.id === params.id)
   const nextCategory = data?.[currentIndex + 1]
 
-  if (data && calonData.has_voted) {
+  if (data && candidateData.has_voted) {
     redirect(nextCategory ? `/vote/${nextCategory.id}` : '/home')
   }
 
@@ -29,10 +29,10 @@ export default function Page({ params }) {
         ) : (
           <>
             <span className="text-xl font-semibold">
-              Kategori {calonData?.name}
+              Kategori {candidateData?.name}
             </span>
             <div className="text-muted-foreground">
-              Daftar calon yang akan anda pilih
+              Daftar kandidat yang akan anda pilih
             </div>
           </>
         )}
@@ -45,7 +45,7 @@ export default function Page({ params }) {
           <Skeleton className="w-full h-72 bg-primary/10" />
         </div>
       ) : (
-        <CalonCard categoryId={params.id} nextCategory={nextCategory} />
+        <CandidateCard categoryId={params.id} nextCategory={nextCategory} />
       )}
     </div>
   )

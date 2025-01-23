@@ -12,9 +12,9 @@ export default function CategoryListCard({ data, loading }) {
   return (
     <Card className="border-t-8 border-t-primary">
       <CardHeader className="space-y-0">
-        <CardTitle className="text-xl">Kategori Calon</CardTitle>
+        <CardTitle className="text-xl">Kategori Kandidat</CardTitle>
         <CardDescription className="text-xs">
-          Daftar kategori calon yang dapat anda pilih.
+          Daftar kategori kandidat yang dapat anda pilih.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -26,9 +26,9 @@ export default function CategoryListCard({ data, loading }) {
               <Skeleton className="w-full h-16" />
               <Skeleton className="w-full h-16" />
             </>
-          ) : data.length === 0 ? (
+          ) : data && data.length === 0 ? (
             <p className="text-sm text-muted-foreground italic">
-              Tidak ada kategori calon yang bisa dipilih.
+              Tidak ada kategori kandidat yang bisa dipilih.
             </p>
           ) : (
             data?.map((category) => (

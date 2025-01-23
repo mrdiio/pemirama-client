@@ -21,7 +21,7 @@ const nextConfig = {
       },
       {
         protocol: 'http',
-        hostname: 'pemirama-new.test',
+        hostname: 'pemirama-online.test',
       },
       {
         protocol: 'https',

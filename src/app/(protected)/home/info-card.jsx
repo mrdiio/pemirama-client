@@ -22,12 +22,14 @@ export default function InfoCard() {
                 <Skeleton className="w-48 h-[20px] bg-primary/10" />
                 <Skeleton className="w-48 h-[20px] bg-primary/10" />
               </div>
-            ) : data?.jadwal ? (
+            ) : data?.schedule ? (
               <>
                 <h1 className="font-semibold">
-                  {data.jadwal.hari}, {data.jadwal.tanggal_format}
+                  {data.schedule.day}, {data.schedule.date_format}
                 </h1>
-                <span className="text-sm">09.00 - 16.00</span>
+                <span className="text-sm">
+                  {data.schedule.start_time} - {data.schedule.end_time}
+                </span>
               </>
             ) : (
               <p className="text-sm">Belum ada jadwal</p>

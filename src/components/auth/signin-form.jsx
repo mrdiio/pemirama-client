@@ -37,8 +37,9 @@ export default function SignInForm() {
   const { data, isLoading, isFetching } = useInfoQuery()
 
   // check jadwal with moment between
-  const start = data && moment(`${data?.jadwal.tanggal} ${data?.jadwal.mulai}`)
-  const end = data && moment(`${data?.jadwal.tanggal} ${data?.jadwal.selesai}`)
+  const start =
+    data && moment(`${data.schedule.date} ${data?.schedule.start_time}`)
+  const end = data && moment(`${data.schedule.date} ${data.schedule.end_time}`)
   const now = moment()
 
   const isOnSchedule = now.isBetween(start, end)

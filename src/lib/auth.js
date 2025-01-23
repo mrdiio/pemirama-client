@@ -22,7 +22,7 @@ export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: 'jwt',
-    maxAge: 60 * 20,
+    maxAge: 3,
   },
   pages: {
     signIn: '/',
@@ -63,7 +63,7 @@ export const authOptions = {
       const checkFoto = await checkFotoService(session.accessToken)
       token.user.isSwafotoExist = checkFoto.isExist
     },
-    updateUser: async ({ user, account, profile, isNewUser }) => {
+    updateUser: async ({ user, profile }) => {
       user.isSwafotoExist = profile.isSwafotoExist
     },
   },
