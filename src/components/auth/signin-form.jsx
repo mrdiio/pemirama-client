@@ -91,10 +91,12 @@ export default function SignInForm() {
     <Card className="flex justify-center items-center py-10 bg-red-50 px-2">
       <div className="text-center space-y-2">
         <h2 className="text-2xl font-bold">Pemilihan Ditutup</h2>
-        <p className="text-sm text-gray-500">
-          Jadwal Pemilihan : {start.format('dddd, DD MMMM YYYY')} Pukul{' '}
-          {start.format('HH:mm')} -{end.format('HH:mm')}
-        </p>
+        {data?.schedule && (
+          <p className="text-sm text-gray-500">
+            Jadwal Pemilihan : {start.format('dddd, DD MMMM YYYY')} Pukul{' '}
+            {start.format('HH:mm')} -{end.format('HH:mm')}
+          </p>
+        )}
       </div>
     </Card>
   ) : (
