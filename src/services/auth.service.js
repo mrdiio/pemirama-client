@@ -13,11 +13,15 @@ export const loginService = async (email, password) => {
     const res = await authApi.post('/login-mhs', { email, password })
     return res.data
   } catch (error) {
-
     if (error.response.status === 500) {
       throw new Error('Server error')
     }
 
-    throw new Error(error.response.data?.message)
+    const message =
+      error.response.data?.errors?.detail ||
+      error.response.data?.message ||
+      'Login failed'
+
+    throw new Error(message)
   }
 }

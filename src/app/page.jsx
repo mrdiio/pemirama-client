@@ -14,6 +14,13 @@ import kotakSuara from '@/assets/images/kotak-suara.png'
 import { Separator } from '@/components/ui/separator'
 import logo from '@/assets/images/logo.png'
 
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
+import { Button } from '@/components/ui/button'
+
 export default async function Home() {
   const session = await getServerSession(authOptions)
 
@@ -63,7 +70,6 @@ export default async function Home() {
               Haloo!,
             </CardTitle>
             <Separator className="w-20 h-1.5 bg-primary" />
-
             <CardDescription>
               Selamat datang di website{' '}
               <span className="font-semibold text-base">
@@ -73,6 +79,39 @@ export default async function Home() {
               <span className="font-semibold uppercase">Satu Untan</span> untuk
               melanjutkan ke pemilihan.
             </CardDescription>
+
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="outline">Info Login</Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-96" side="top">
+                <div className="grid gap-4">
+                  <div className="space-y-2">
+                    <ul className="px-4 list-disc text-muted-foreground text-sm">
+                      <li>
+                        <strong>Email</strong> dan <strong>password</strong>{' '}
+                        yang anda gunakan harus sama dengan yang anda gunakan di
+                        SATU UNTAN.
+                      </li>
+                      <li>
+                        Pastikan anda dapat login di Satu Untan menggunakan{''}
+                        <strong> Email</strong> dan <strong> Password</strong>,
+                        bukan menggunakan tombol Login by Google.
+                      </li>
+                      <li>
+                        Jika password salah, silahkan reset password di SATU
+                        UNTAN, bukan reset password email anda.
+                      </li>
+                      <li>
+                        Email yang digunakan di SATU UNTAN dapat berupa email
+                        pribadi atau email institusi.
+                      </li>
+                    </ul>
+                  </div>
+                  <div className="px-4 text-muted-foreground text-sm"></div>
+                </div>
+              </PopoverContent>
+            </Popover>
           </CardHeader>
 
           <CardContent>

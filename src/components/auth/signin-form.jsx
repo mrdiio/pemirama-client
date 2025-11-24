@@ -23,6 +23,7 @@ import moment from 'moment'
 import 'moment/locale/id'
 import { Card } from '../ui/card'
 import { Skeleton } from '../ui/skeleton'
+import Link from 'next/link'
 
 const formSchema = z.object({
   email: z.string().min(1, 'Email is required').email(),
@@ -120,7 +121,6 @@ export default function SignInForm() {
             </FormItem>
           )}
         />
-
         <FormField
           control={form.control}
           name="password"
@@ -138,7 +138,14 @@ export default function SignInForm() {
             </FormItem>
           )}
         />
-
+        <div className="flex justify-end">
+          <Link
+            href="https://sso.sevima.com/users/password-reset?client_id=84f03a0e-a33a-461e-ba01-4eeb500bcf31&redirect_uri=https://satu.untan.ac.id/gate/login"
+            className="text-sm font-semibold underline text-primary"
+          >
+            Lupa kata sandi?
+          </Link>
+        </div>
         <div className="flex justify-end pt-4">
           <Button
             type="submit"
